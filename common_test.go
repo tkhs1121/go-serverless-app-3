@@ -36,30 +36,13 @@ func TestParseRequest(t *testing.T) {
 }
 
 func TestCheckAmazonURL(t *testing.T) {
-	tests := []struct {
-		name string
-		url  string
-		want error
-	}{
-		{
-			name: "Correct URL",
-			url:  "https://www.amazon.co.jp",
-			want: nil,
-		},
-		{
-			name: "Invalid URL",
-			url:  "http://konozama.co.jp",
-			want: fmt.Errorf("this is not amazon url: http://konozama.co.jp"),
-		},
-	}
-
-	t.Run(tests[0].name, func(t *testing.T) {
-		if err := checkAmazonURL(tests[0].url); err != nil {
+	t.Run("Correct URL", func(t *testing.T) {
+		if err := checkAmazonURL("https://www.amazon.co.jp"); err != nil {
 			t.Errorf("%v", err)
 		}
 	})
-	t.Run(tests[1].name, func(t *testing.T) {
-		if err := checkAmazonURL(tests[1].url); err == nil {
+	t.Run("Invalid URL", func(t *testing.T) {
+		if err := checkAmazonURL("http://konozama.co.jp"); err == nil {
 			t.Errorf("%v", err)
 		}
 	})
